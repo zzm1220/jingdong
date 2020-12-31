@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2020-12-29 10:04:54
  * @LastEditors: zhimin
- * @LastEditTime: 2020-12-29 15:56:04
+ * @LastEditTime: 2020-12-31 15:08:38
  * @FilePath: \v-3\chap08\jingdong\src\main.js
  */
 import {
