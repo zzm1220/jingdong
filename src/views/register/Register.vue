@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2020-12-31 14:15:01
  * @LastEditors: zhimin
- * @LastEditTime: 2020-12-31 17:04:45
+ * @LastEditTime: 2021-01-04 10:19:12
  * @FilePath: \v-3\chap08\jingdong\src\views\register\Register.vue
 -->
 <template>
@@ -43,7 +43,10 @@
       >注册</button>
     </div>
     <div class="wrapper__link">
-      <span class="text login">已有账号去登录</span>
+      <span
+        class="text login"
+        @click="handleLoginClick"
+      >已有账号去登录</span>
     </div>
   </div>
 </template>
@@ -53,18 +56,22 @@ import { useRouter } from 'vue-router'
 export default {
   name: 'Register',
   setup () {
-    const router = useRouter();
+    const router = useRouter()
     const handleLogin = () => {
-      localStorage.isLogin = true;
+      localStorage.isLogin = true
       router.push({
         name: 'Home'
       })
     }
+    const handleLoginClick = () => {
+      router.push({ name: 'Login' })
+    }
     return {
-      handleLogin
+      handleLogin,
+      handleLoginClick
     }
   }
-};
+}
 </script>
 
 <style scoped lang="scss">

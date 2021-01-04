@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2020-12-31 10:11:43
  * @LastEditors: zhimin
- * @LastEditTime: 2020-12-31 10:15:04
+ * @LastEditTime: 2021-01-04 15:32:26
  * @FilePath: \v-3\chap08\jingdong\src\views\home\Header.vue
 -->
 <template>
@@ -29,7 +29,7 @@ export default {
   data () {
     return {
 
-    };
+    }
   },
   created () {
 
@@ -40,7 +40,7 @@ export default {
   methods: {
 
   }
-};
+}
 </script>
 
 <style scoped lang="scss">

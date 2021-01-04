@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2020-12-29 10:04:54
  * @LastEditors: zhimin
- * @LastEditTime: 2020-12-31 16:44:20
+ * @LastEditTime: 2021-01-04 10:14:14
  * @FilePath: \v-3\chap08\jingdong\src\router\index.js
  */
 import {
@@ -11,7 +11,7 @@ import {
 } from 'vue-router'
 import Home from '../views/home/Home.vue'
 import Login from '../views/login/Login.vue'
-import Register from "../views/register/Register.vue"
+import Register from '../views/register/Register.vue'
 
 const routes = [{
   path: '/',
@@ -24,15 +24,23 @@ const routes = [{
   beforeEnter: (to, from, next) => {
     const {
       isLogin
-    } = localStorage.isLogin;
+    } = localStorage
     isLogin ? next({
       name: 'Home'
-    }) : next();
+    }) : next()
   }
 }, {
   path: '/register',
   name: 'Register',
-  component: Register
+  component: Register,
+  beforeEnter: (to, from, next) => {
+    const {
+      isLogin
+    } = localStorage
+    isLogin ? next({
+      name: 'Home'
+    }) : next()
+  }
 }]
 
 const router = createRouter({
@@ -44,10 +52,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const {
     isLogin
-  } = localStorage;
-  (isLogin || to.name === 'Login') ? next(): next({
+  } = localStorage
+  const {
+    name
+  } = to
+  const isLoginOrRegister = (name === 'Login' || name === 'Register')
+  const toNext = isLogin || isLoginOrRegister
+  toNext ? next() : next({
     name: 'Login'
-  });
+  })
 })
 
 export default router
