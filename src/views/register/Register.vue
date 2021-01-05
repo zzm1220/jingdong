@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2020-12-31 14:15:01
  * @LastEditors: zhimin
- * @LastEditTime: 2021-01-04 10:19:12
+ * @LastEditTime: 2021-01-05 10:21:41
  * @FilePath: \v-3\chap08\jingdong\src\views\register\Register.vue
 -->
 <template>
@@ -18,7 +18,8 @@
         <input
           class="input__text"
           type="text"
-          placeholder="请输入手机号"
+          placeholder="请输入用户名"
+          v-model="username"
         >
       </div>
       <div class="wrapper__text">
@@ -26,6 +27,7 @@
           class="input__text"
           type="password"
           placeholder="请输入密码"
+          v-model="password"
         >
       </div>
       <div class="wrapper__text">
@@ -33,13 +35,14 @@
           class="input__text"
           type="password"
           placeholder="确认密码"
+          v-model="checkPassword"
         >
       </div>
     </div>
     <div class="wrapper__register">
       <button
         class="register"
-        @click="handleLogin"
+        @click="handleRegister"
       >注册</button>
     </div>
     <div class="wrapper__link">
@@ -48,27 +51,77 @@
         @click="handleLoginClick"
       >已有账号去登录</span>
     </div>
+    <Toast
+      v-if="isShow"
+      :msg="toastMsg"
+    />
   </div>
 </template>
 
 <script>
 import { useRouter } from 'vue-router'
+import { reactive, toRefs } from 'vue'
+import { post } from '../../utils/request.js'
+import Toast, { useToastEffect } from '../../components/Toast.vue'
+
+const useRegisterEffect = (showToast) => {
+  const router = useRouter()
+  const data = reactive({
+    username: '',
+    password: '',
+    checkPassword: ''
+  })
+  const handleRegister = async () => {
+    try {
+      if (data.password !== data.checkPassword) {
+        showToast('密码不一致')
+        return
+      }
+      const result = await post('/user/register', {
+        username: data.username,
+        password: data.password
+      })
+      if (result?.errno === 0) {
+        router.push({
+          name: 'Login'
+        })
+      } else {
+        showToast('注册失败')
+      }
+    } catch (e) {
+      showToast(e)
+    }
+  }
+  return {
+    data,
+    handleRegister
+  }
+}
+const useGoLoginEffect = () => {
+  const router = useRouter()
+  const handleLoginClick = () => router.push({ name: 'Login' })
+  return {
+    handleLoginClick
+  }
+}
 export default {
   name: 'Register',
+  components: {
+    Toast
+  },
   setup () {
-    const router = useRouter()
-    const handleLogin = () => {
-      localStorage.isLogin = true
-      router.push({
-        name: 'Home'
-      })
-    }
-    const handleLoginClick = () => {
-      router.push({ name: 'Login' })
-    }
+    const { isShow, toastMsg, showToast } = useToastEffect()
+    const { handleLoginClick } = useGoLoginEffect()
+    const { data, handleRegister } = useRegisterEffect(showToast)
+    const { username, password, checkPassword } = toRefs(data)
     return {
-      handleLogin,
-      handleLoginClick
+      isShow,
+      toastMsg,
+      username,
+      password,
+      checkPassword,
+      handleLoginClick,
+      handleRegister
     }
   }
 }

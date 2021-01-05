@@ -2,25 +2,26 @@
  * @Author: zhimin
  * @Date: 2020-12-29 10:04:54
  * @LastEditors: zhimin
- * @LastEditTime: 2021-01-04 10:14:14
+ * @LastEditTime: 2021-01-05 16:54:49
  * @FilePath: \v-3\chap08\jingdong\src\router\index.js
  */
 import {
   createRouter,
   createWebHashHistory
 } from 'vue-router'
-import Home from '../views/home/Home.vue'
-import Login from '../views/login/Login.vue'
-import Register from '../views/register/Register.vue'
 
 const routes = [{
   path: '/',
   name: 'Home',
-  component: Home
+  component: () => import(/* webpackChunkName: "home" */ '../views/home/Home.vue')
+}, {
+  path: '/shop/:id',
+  name: 'Shop',
+  component: () => import(/* webpackChunkName: "shop" */ '../views/shop/Shop.vue')
 }, {
   path: '/login',
   name: 'Login',
-  component: Login,
+  component: () => import(/* webpackChunkName: "login" */ '../views/login/Login.vue'),
   beforeEnter: (to, from, next) => {
     const {
       isLogin
@@ -32,7 +33,7 @@ const routes = [{
 }, {
   path: '/register',
   name: 'Register',
-  component: Register,
+  component: () => import(/* webpackChunkName: "register" */ '../views/register/Register.vue'),
   beforeEnter: (to, from, next) => {
     const {
       isLogin

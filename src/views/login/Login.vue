@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2020-12-31 14:15:01
  * @LastEditors: zhimin
- * @LastEditTime: 2021-01-04 17:38:08
+ * @LastEditTime: 2021-01-05 10:28:53
  * @FilePath: \v-3\chap08\jingdong\src\views\login\Login.vue
 -->
 <template>
@@ -66,6 +66,11 @@ const useLoginEffect = (showToast) => {
   })
   const handleLogin = async () => {
     try {
+      const { username, password } = data
+      if (!username || !password) {
+        showToast('用户名或密码不能为空!')
+        return
+      }
       const result = await post('/user/login', {
         username: data.username,
         password: data.password
@@ -184,6 +189,7 @@ export default {
     text-align: center;
     font-size: 0.14rem;
     color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
     & .text {
       margin-right: 0.12rem;
       &:last-child {

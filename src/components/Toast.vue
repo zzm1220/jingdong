@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2021-01-04 16:41:29
  * @LastEditors: zhimin
- * @LastEditTime: 2021-01-04 17:25:20
+ * @LastEditTime: 2021-01-05 10:21:19
  * @FilePath: \v-3\chap08\jingdong\src\components\Toast.vue
 -->
 <template>
@@ -29,7 +29,7 @@ export const useToastEffect = () => {
     toastMsg: ''
   })
   const showToast = message => {
-    toastData.toastMsg = '登录失败'
+    toastData.toastMsg = message
     toastData.isShow = true
     setTimeout(() => {
       toastData.isShow = false

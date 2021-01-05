@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2020-12-31 10:19:06
  * @LastEditors: zhimin
- * @LastEditTime: 2020-12-31 11:18:48
+ * @LastEditTime: 2021-01-05 17:00:13
  * @FilePath: \v-3\chap08\jingdong\src\views\home\Content.vue
 -->
 <template>
@@ -30,120 +30,100 @@
     </div>
     <div class="nearby">
       <h3 class="nearby__title">附近店铺</h3>
-      <div
-        class="nearby__item"
+      <router-link
         v-for="item in nearByItems"
-        :key="item.title"
+        :to="`/shop/${item._id}`"
+        :key="item.name"
       >
-        <img
-          class="nearby__item__img"
-          :src="item.imgSrc"
-          :alt="item.title"
-        />
-        <div class="nearby__content">
-          <h4 class="nearby__content__title">{{item.title}}</h4>
-          <div class="nearby__content__items">
-            <span
-              class="item_text"
-              v-for="tag in item.tags"
-              :key="tag"
-            >{{tag}}</span>
-          </div>
-          <div class="nearby__content__intro">
-            {{item.intro}}
-          </div>
-        </div>
-      </div>
+        <ShopItem :item="item" />
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue'
+import { get } from '../../utils/request'
+import ShopItem from '../../components/ShopItem'
+const useNearbyEffect = () => {
+  const nearByItems = ref([])
+  const getNearbyItems = async () => {
+    const result = await get('/shop/hot-list')
+    if (result?.errno === 0 && result?.data?.length) {
+      nearByItems.value = result.data
+    }
+  }
+  return {
+    nearByItems,
+    getNearbyItems
+  }
+}
+const useIconItemsEffect = () => {
+  const iconItems = [
+    {
+      id: 1,
+      imgSrc: 'http://www.dell-lee.com/imgs/vue3/超市.png',
+      text: '超市便利'
+    },
+    {
+      id: 2,
+      imgSrc: 'http://www.dell-lee.com/imgs/vue3/菜市场.png',
+      text: '菜市场'
+    },
+    {
+      id: 3,
+      imgSrc: 'http://www.dell-lee.com/imgs/vue3/水果店.png',
+      text: '水果店'
+    },
+    {
+      id: 4,
+      imgSrc: 'http://www.dell-lee.com/imgs/vue3/鲜花.png',
+      text: '鲜花绿植'
+    },
+    {
+      id: 5,
+      imgSrc: 'http://www.dell-lee.com/imgs/vue3/医药健康.png',
+      text: '医药健康'
+    },
+    {
+      id: 6,
+      imgSrc: 'http://www.dell-lee.com/imgs/vue3/家居.png',
+      text: '家居时尚'
+    },
+    {
+      id: 7,
+      imgSrc: 'http://www.dell-lee.com/imgs/vue3/蛋糕.png',
+      text: '烘培蛋糕'
+    },
+    {
+      id: 8,
+      imgSrc: 'http://www.dell-lee.com/imgs/vue3/签到.png',
+      text: '签到'
+    },
+    {
+      id: 9,
+      imgSrc: 'http://www.dell-lee.com/imgs/vue3/大牌免运.png',
+      text: '大牌免运'
+    },
+    {
+      id: 10,
+      imgSrc: 'http://www.dell-lee.com/imgs/vue3/红包.png',
+      text: '红包套餐'
+    }
+  ]
+  return {
+    iconItems
+  }
+}
 export default {
   name: 'Content',
+  components: {
+    ShopItem
+  },
   setup () {
-    const nearByItems = [
-      {
-        id: 1,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/near.png',
-        title: '沃尔玛',
-        tags: ['月售1万+', '起送¥0', '基础运费¥5'],
-        intro: 'VIP尊享满89元减4元运费券（每月3张）'
-      },
-      {
-        id: 2,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/near.png',
-        title: '山姆会员商店',
-        tags: ['月售2千+', '起送¥0', '基础运费¥5'],
-        intro: '联合利华洗护满10减5）'
-      },
-      {
-        id: 3,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/near.png',
-        title: '沃尔玛',
-        tags: ['月售1万+', '起送¥0', '基础运费¥5'],
-        intro: 'VIP尊享满89元减4元运费券（每月3张）'
-      },
-      {
-        id: 4,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/near.png',
-        title: '山姆会员商店',
-        tags: ['月售2千+', '起送¥0', '基础运费¥5'],
-        intro: '联合利华洗护满10减5）'
-      }
-    ]
-    const iconItems = [
-      {
-        id: 1,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/超市.png',
-        text: '超市便利'
-      },
-      {
-        id: 2,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/菜市场.png',
-        text: '菜市场'
-      },
-      {
-        id: 3,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/水果店.png',
-        text: '水果店'
-      },
-      {
-        id: 4,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/鲜花.png',
-        text: '鲜花绿植'
-      },
-      {
-        id: 5,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/医药健康.png',
-        text: '医药健康'
-      },
-      {
-        id: 6,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/家居.png',
-        text: '家居时尚'
-      },
-      {
-        id: 7,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/蛋糕.png',
-        text: '烘培蛋糕'
-      },
-      {
-        id: 8,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/签到.png',
-        text: '签到'
-      },
-      {
-        id: 9,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/大牌免运.png',
-        text: '大牌免运'
-      },
-      {
-        id: 10,
-        imgSrc: 'http://www.dell-lee.com/imgs/vue3/红包.png',
-        text: '红包套餐'
-      }
-    ]
+    const { iconItems } = useIconItemsEffect()
+    const { nearByItems, getNearbyItems } = useNearbyEffect()
+    getNearbyItems()
     return {
       nearByItems,
       iconItems
@@ -203,39 +183,9 @@ export default {
       line-height: 0.25rem;
       font-size: 0.18rem;
     }
-    &__item {
-      margin-top: 0.14rem;
-      width: 100%;
-      display: flex;
-      &__img {
-        width: 0.56rem;
-        height: 0.56rem;
-      }
-    }
-    &__content {
-      margin-left: 0.16rem;
-      padding-bottom: 0.12rem;
-      border-bottom: 0.01rem bolid $wrapper-bg;
-      &__title {
-        margin: 0;
-        font-size: 0.16rem;
-        font-weight: normal;
-        line-height: 0.22rem;
-      }
-      &__items {
-        margin-top: 0.08rem;
-        font-size: 0.13rem;
-        line-height: 0.18rem;
-        & .item_text {
-          margin-right: 0.16rem;
-        }
-      }
-      &__intro {
-        margin-top: 0.08rem;
-        font-size: 0.13rem;
-        line-height: 0.18rem;
-        color: #e93b3b;
-      }
+    a {
+      text-decoration: none;
+      color: #333333;
     }
   }
 }
