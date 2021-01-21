@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2020-12-29 10:04:54
  * @LastEditors: zhimin
- * @LastEditTime: 2021-01-05 16:54:49
+ * @LastEditTime: 2021-01-21 14:29:49
  * @FilePath: \v-3\chap08\jingdong\src\router\index.js
  */
 import {
@@ -18,6 +18,19 @@ const routes = [{
   path: '/shop/:id',
   name: 'Shop',
   component: () => import(/* webpackChunkName: "shop" */ '../views/shop/Shop.vue')
+}, {
+  path: '/orderList',
+  name: 'OrderList',
+  component: () => import(/* webpackChunkName: "orderList" */ '../views/orderList/OrderList.vue')
+},
+{
+  path: '/orderCreation/:id',
+  name: 'orderCreation',
+  component: () => import(/* webpackChunkName: "orderCreation" */ '../views/orderConfirm/OrderConfirm.vue')
+}, {
+  path: '/cart',
+  name: 'Cart',
+  component: () => import(/* webpackChunkName: "orderCreation" */ '../views/cart/Cart.vue')
 }, {
   path: '/login',
   name: 'Login',

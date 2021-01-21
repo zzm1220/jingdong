@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2020-12-31 10:11:43
  * @LastEditors: zhimin
- * @LastEditTime: 2021-01-04 15:32:26
+ * @LastEditTime: 2021-01-18 15:51:47
  * @FilePath: \v-3\chap08\jingdong\src\views\home\Header.vue
 -->
 <template>
@@ -25,21 +25,7 @@
 
 <script>
 export default {
-  name: 'Header',
-  data () {
-    return {
-
-    }
-  },
-  created () {
-
-  },
-  mounted () {
-
-  },
-  methods: {
-
-  }
+  name: 'Header'
 }
 </script>
 

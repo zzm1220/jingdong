@@ -2,23 +2,28 @@
  * @Author: zhimin
  * @Date: 2020-12-31 10:22:38
  * @LastEditors: zhimin
- * @LastEditTime: 2020-12-31 11:18:58
- * @FilePath: \v-3\chap08\jingdong\src\views\home\Footer.vue
+ * @LastEditTime: 2021-01-21 14:45:47
+ * @FilePath: \v-3\chap08\jingdong\src\components\Footer.vue
 -->
 <template>
   <div class="docker">
-    <div
-      class="docker__item"
-      :class="{'docker__item--active':item.isActive}"
+    <template
       v-for="item in dockerList"
       :key="item.text"
     >
-      <span
-        class="iconfont"
-        v-html="item.icon"
-      ></span>
-      <span class="item__text">{{item.text}}</span>
-    </div>
+      <router-link :to="item.to">
+        <div
+          class="docker__item"
+          :class="{'docker__item--active':item.isActive}"
+        >
+          <span
+            class="iconfont"
+            v-html="item.icon"
+          ></span>
+          <span class="item__text">{{item.text}}</span>
+        </div>
+      </router-link>
+    </template>
   </div>
 </template>
 
@@ -29,16 +34,20 @@ export default {
     const dockerList = [{
       icon: '&#xe71b;',
       text: '首页',
-      isActive: true
+      isActive: true,
+      to: { name: 'Home' }
     }, {
       icon: '&#xe7e5;',
-      text: '购物车'
+      text: '购物车',
+      to: { name: 'Cart' }
     }, {
       icon: '&#xe605;',
-      text: '订单'
+      text: '订单',
+      to: { name: 'OrderList' }
     }, {
       icon: '&#xe6b3;',
-      text: '我的'
+      text: '我的',
+      to: { name: 'Home' }
     }]
     return {
       dockerList
@@ -48,7 +57,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../style/varible.scss';
+@import '../style/varible.scss';
 .docker {
   box-sizing: border-box;
   position: fixed;
@@ -62,8 +71,11 @@ export default {
   border-top: 0.01rem solid #f1f1f1;
   background: #ffffff;
   z-index: 100;
-  &__item {
+  a {
     flex: 1;
+    color: #333333;
+  }
+  &__item {
     text-align: center;
     display: flex;
     flex-direction: column;

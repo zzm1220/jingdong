@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2021-01-05 14:34:25
  * @LastEditors: zhimin
- * @LastEditTime: 2021-01-05 17:33:43
+ * @LastEditTime: 2021-01-19 11:24:09
  * @FilePath: \v-3\chap08\jingdong\src\views\shop\Shop.vue
 -->
 <template>
@@ -27,6 +27,11 @@
         v-show="data.item.imgSrc"
       />
     </div>
+    <Content
+      :shopId="data.id"
+      :shopName="data.item.name"
+    />
+    <Cart :id="data.id" />
   </div>
 
 </template>
@@ -36,6 +41,8 @@ import { reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { get } from '../../utils/request'
 import ShopItem from '../../components/ShopItem.vue'
+import Content from './Content.vue'
+import Cart from './Cart'
 const useInputSearchEffect = () => {
   const router = useRouter()
   const handleBackClick = () => {
@@ -48,7 +55,8 @@ const useInputSearchEffect = () => {
 const useShopDetailEffect = () => {
   const route = useRoute()
   const data = reactive({
-    item: {}
+    item: {},
+    id: route.params.id
   })
   const getShopDetail = async () => {
     const result = await get(`/shop/detail/${route.params.id}`)
@@ -64,7 +72,9 @@ const useShopDetailEffect = () => {
 export default {
   name: 'Shop',
   components: {
-    ShopItem
+    ShopItem,
+    Content,
+    Cart
   },
   setup () {
     const { handleBackClick } = useInputSearchEffect()

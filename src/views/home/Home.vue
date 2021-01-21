@@ -2,7 +2,7 @@
  * @Author: zhimin
  * @Date: 2020-12-29 10:04:54
  * @LastEditors: zhimin
- * @LastEditTime: 2020-12-31 11:19:12
+ * @LastEditTime: 2021-01-21 14:45:13
  * @FilePath: \v-3\chap08\jingdong\src\views\home\Home.vue
 -->
 <template>
@@ -15,7 +15,7 @@
 <script>
 import Header from './Header.vue'
 import Content from './Content.vue'
-import Footer from './Footer.vue'
+import Footer from '../../components//Footer.vue'
 export default {
   name: 'Home',
   components: {
